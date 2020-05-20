@@ -1,0 +1,19 @@
+/people/schaub/Documents/projets/baselines/ComerNet/utils.py:16: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  return AttrDict(yaml.load(open(path, 'r')))
+[0]
+True
+loading data...
+
+loading time cost: 2.621
+30529
+building model...
+
+Traceback (most recent call last):
+  File "train.py", line 92, in <module>
+    pretrain=pretrain_embed, score_fn=opt.score) 
+  File "/people/schaub/Documents/projets/baselines/ComerNet/models/seq2seq.py", line 32, in __init__
+    self.slot_embedding = nn.Embedding.from_pretrained(pretrain['slot'],freeze=False)
+  File "/people/schaub/anaconda3/envs/comer3/lib/python3.7/site-packages/torch/nn/modules/sparse.py", line 161, in from_pretrained
+    'Embeddings parameter is expected to be 2-dimensional'
+AssertionError: Embeddings parameter is expected to be 2-dimensional
+\n\n\n###################################\n\n\n

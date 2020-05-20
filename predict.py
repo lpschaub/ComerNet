@@ -125,23 +125,23 @@ for src1, src1_len, src2,src2_len, src3, src3_len, tgt, tgt_len,tgtv, tgtv_len,t
 
             vvt=defaultdict(dict)
             svt={}
-#             print("xvv:", xvv)
+            print("xvv:", xvv)
             for i,k in enumerate(xvv[:-1]):
                 slots=xv[:-1][i][0][:-1].tolist()
                 if len(slots)!=0:
                     for ji,j in enumerate(k[:-1]):
                         jt=j[0][:-1].tolist()
                         svt[xt[i]]=set(slots)
-#                       print("jt:",jt)
+                        print("jt:",jt)
                         if len(jt)!=0:
                             vvt[xt[i]][slots[ji]]=jt
             preds.append(set(xt))  
             joint_preds.append(svt)
             joint_allps.append(vvt)
-            #print("vvt:",vvt)
+            print("vvt:",vvt)
 
 
-            #print(joint_preds)
+            print(joint_preds)
             label = []
             for l in y[1:].tolist():
                 if l == dic.EOS:

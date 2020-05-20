@@ -12,7 +12,7 @@ import os
 import argparse
 import time
 import collections
-from pytorch_pretrained_bert import BertModel
+from transformers import BertModel
 from convert_mw import bert,tokenizer,bert_type
 from collections import defaultdict
 #config

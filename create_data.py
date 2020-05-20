@@ -27,6 +27,8 @@ MAX_LENGTH = 50
 IGNORE_KEYS_IN_GOAL = ['eod', 'topic', 'messageLen', 'message']
 
 fin = file('mapping.pair')
+#fin = open('mapping.pair', 'r')
+
 replacements = []
 for line in fin.readlines():
     tok_from, tok_to = line.replace('\n', '').split('\t')
@@ -359,9 +361,11 @@ def createData():
     delex_data = {}
 
     fin1 = file('data/multi-woz/data.json')
+    #fin1 = open('data/multi-woz/data.json', 'r')
     data = json.load(fin1)
 
     fin2 = file('data/multi-woz/dialogue_acts.json')
+    #fin2 = open('data/multi-woz/dialogue_acts.json', 'r')
     data2 = json.load(fin2)
 
     for didx, dialogue_name in enumerate(data):

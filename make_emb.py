@@ -1,7 +1,8 @@
 import torch
 from convert_mw import bert,tokenizer,bert_type
-from pytorch_pretrained_bert import BertModel
-torch.cuda.set_device(0)
+from transformers import BertModel
+#torch.cuda.set_device(0)
+torch.cuda.set_device(1)
 torch.cuda.manual_seed(1234)
 torch.manual_seed(1234)
 bmodel = BertModel.from_pretrained(bert_type)
@@ -18,7 +19,7 @@ for i in range(len(tgtD)):
         print(label)
         print(x1)
     encoded_layers, _ =bmodel(torch.LongTensor(x1).cuda().unsqueeze(0),token_type_ids=None, attention_mask=None)   
-    x=torch.stack(encoded_layers,-1).mean(-1).mean(-2)
+    x=torch.stack(tuple(encoded_layers),-1).mean(-1).mean(-2)
     emb.append(x.detach().cpu())
 x=torch.cat(emb,0)
 torch.save(x,'emb_tgt_mw.pt')
