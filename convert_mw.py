@@ -3,11 +3,10 @@ import json
 import pickle
 import torch
 from transformers import BertTokenizer
-# from pytorch_pretrained_bert import BertTokenizer
 from collections import defaultdict
 ### this file is to convert the raw woz data into the format required for prepross.py
 bert=True
-bert_type='bert-base-uncased'
+bert_type='bert-large-uncased'
 tokenizer=BertTokenizer.from_pretrained(bert_type)
 
 def _truncate_seq_pair(tokens_a, tokens_b, max_length):

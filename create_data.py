@@ -2,7 +2,7 @@
 import copy
 import json
 import os
-import re
+import re, ssl
 import shutil
 import urllib
 from collections import OrderedDict
@@ -27,8 +27,6 @@ MAX_LENGTH = 50
 IGNORE_KEYS_IN_GOAL = ['eod', 'topic', 'messageLen', 'message']
 
 fin = file('mapping.pair')
-#fin = open('mapping.pair', 'r')
-
 replacements = []
 for line in fin.readlines():
     tok_from, tok_to = line.replace('\n', '').split('\t')
@@ -307,6 +305,9 @@ def get_dial(dialogue):
 
 
 def loadData():
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
     data_url = "data/multi-woz/data.json"
     dataset_url = "https://www.repository.cam.ac.uk/bitstream/handle/1810/280608/MULTIWOZ2.zip?sequence=3&isAllowed=y"
     if not os.path.exists("data"):
@@ -315,7 +316,7 @@ def loadData():
 
     if not os.path.exists(data_url):
         print("Downloading and unzipping the MultiWOZ dataset")
-        resp = urllib.urlopen(dataset_url)
+        resp = urllib.urlopen(dataset_url,context=ctx)
         zip_ref = ZipFile(BytesIO(resp.read()))
         zip_ref.extractall("data/multi-woz")
         zip_ref.close()
@@ -361,11 +362,9 @@ def createData():
     delex_data = {}
 
     fin1 = file('data/multi-woz/data.json')
-    #fin1 = open('data/multi-woz/data.json', 'r')
     data = json.load(fin1)
 
     fin2 = file('data/multi-woz/dialogue_acts.json')
-    #fin2 = open('data/multi-woz/dialogue_acts.json', 'r')
     data2 = json.load(fin2)
 
     for didx, dialogue_name in enumerate(data):

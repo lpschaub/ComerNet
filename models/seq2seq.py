@@ -29,13 +29,6 @@ class seq2seq(nn.Module):
     def __init__(self, config, src_vocab, tgt_vocab, use_cuda, bmodel,pretrain=None, score_fn=None):
         super(seq2seq, self).__init__()
         if pretrain is not None:
-
-            print(f"dims = {pretrain['slot'].dim()}")
-            print(f"slots = {pretrain['slot']}")
-            print(f"type  = {type(pretrain)} type slot = {type(pretrain['slot'])}")
-
-            for elem in pretrain :
-                print(f'{elem} = {pretrain[elem]} and dim = {pretrain[elem].dim()}')
             self.slot_embedding = nn.Embedding.from_pretrained(pretrain['slot'],freeze=False)
         else:
             self.slot_embedding = None
