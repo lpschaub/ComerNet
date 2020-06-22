@@ -20,7 +20,7 @@ def sequence_mask(sequence_length, max_len=None):
     seq_range = torch.arange(0, max_len).long()
     seq_range_expand = seq_range.unsqueeze(0).expand(batch_size, max_len)
     if sequence_length.is_cuda:
-        seq_range_expand = seq_range_expand.cuda()
+        seq_range_expand = seq_range_expand
     seq_length_expand = (sequence_length.unsqueeze(1).expand_as(seq_range_expand))
     return -(seq_range_expand >= seq_length_expand).float()*1e9
 
@@ -98,9 +98,9 @@ class seq2seq(nn.Module):
         BOS=dict.BOS
         EOS=dict.EOS
         bos = torch.ones(bsize).long().fill_(BOS) # [B]
-        vp=torch.LongTensor([[BOS],[EOS]]).cuda()
+        vp=torch.LongTensor([[BOS],[EOS]])
         if self.use_cuda:
-            bos = bos.cuda()
+            bos = bos
         # iterate each turn
         all_hidden=[]
         all_vhidden=[]
@@ -114,10 +114,10 @@ class seq2seq(nn.Module):
 
             
             if self.use_cuda:
-                src1 = src1.cuda()
-                src2 = src2.cuda()
-                src1_len = src1_len.cuda()
-                src2_len = src2_len.cuda()
+                src1 = src1
+                src2 = src2
+                src1_len = src1_len
+                src2_len = src2_len
 
                 
             # first pass use prev label
@@ -126,7 +126,7 @@ class seq2seq(nn.Module):
                 b_in=vp
             else:
                 b_in=belief_ids
-            b_len=torch.LongTensor([len(b_in)]).cuda()
+            b_len=torch.LongTensor([len(b_in)])
                 
             # use the output of last turn as previous belief state
             b_out, b_state = self.encoder(b_in,b_len ,False, embedding=self.slot_embedding)
@@ -194,7 +194,7 @@ class seq2seq(nn.Module):
                 vids.append(vid)
             belief_ids.append(EOS)
             #print(belief_ids) 
-            belief_ids=torch.LongTensor(belief_ids).unsqueeze(1).cuda()
+            belief_ids=torch.LongTensor(belief_ids).unsqueeze(1)
             
             all_vsample_ids.append(vids)
             all_ssample_ids.append(sids)

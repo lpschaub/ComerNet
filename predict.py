@@ -86,11 +86,11 @@ model = getattr(models, opt.model)(config, src_vocab, tgt_vocab, use_cuda,bmodel
 if opt.restore:
     model.load_state_dict(checkpoints['model'])
 if use_cuda:
-    model.cuda()
+    model.cpu()
 
 param_count = 0
 for param in model.parameters():
-    param_count += param.view(-1).size()[0]
+    param_count += param.vi.cpu()ew(-1).size()[0]
 
 
 model.eval()
@@ -106,14 +106,14 @@ reference, candidate, source, alignments = [], [], [], []
 for src1, src1_len, src2,src2_len, src3, src3_len, tgt, tgt_len,tgtv, tgtv_len,tgtpv, tgtpv_len in testloader:
 
     if use_cuda:
-        src1 = src1.cuda()
-        src2 = src2.cuda()
-        src3 = src3.cuda()
-        tgtpv = tgtpv.cuda()
-        src1_len = src1_len.cuda()
-        src2_len = src2_len.cuda()
-        src3_len = src3_len.cuda()
-        tgtpv_len = tgtpv_len.cuda()
+        src1 = src1.cpu()
+        src2 = src2.cpu()
+        src3 = src3.cpu()
+        tgtpv = tgtpv.cpu()
+        src1_len = src1_len.cpu()
+        src2_len = src2_len.cpu()
+        src3_len = src3_len.cpu()
+        tgtpv_len = tgtpv_len.cpu()
 
         samples,ssamples,vsamples,_ = model.sample(src1, src1_len, src2,src2_len, src3, src3_len,tgtpv, tgtpv_len)
         # get prediction sequence    

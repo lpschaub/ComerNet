@@ -71,7 +71,7 @@ class rnn_encoder(nn.Module):
         if bert:
             with torch.no_grad():
                 max_len=len(x1)
-                input_mask=torch.arange(max_len).cuda().expand(len(x1_len), max_len) < x1_len.unsqueeze(1)
+                input_mask=torch.arange(max_len).expand(len(x1_len), max_len) < x1_len.unsqueeze(1)
                 xt=x1.transpose(0, 1)
                 encoded_layers, _ =embedding(xt,token_type_ids=None, attention_mask=input_mask)   
                 x=torch.stack(encoded_layers,-1).mean(-1).transpose(0, 1)
